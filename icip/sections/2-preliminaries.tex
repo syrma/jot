@@ -1,10 +1,36 @@
 \section{Preliminaries}
-\label{sec:preliminaries}
+\label{sec:preleminaries}
 
-For a policy $\pi$ with parameters $\theta$ we give the following policy gradient formula below:
+The Markov Decision Process (MDP) is a mathematical model widely used to formulate reinforcement learning problems. Let us consider an infinite-horizon, undiscounted MDP defined by the tuple ($\mathcal{S}, \mathcal{A}, \mathcal{P}, r, \rho_0$) where $\mathcal{S}$ is the set of states, $\mathcal{A}$ is the set of actions, $\mathcal{P}: \mathcal{S}\times\mathcal{A}\times\mathcal{S}\mapsto \mathbb{R}$ , $r: \mathcal{S}\times\mathcal{A}\times\mathcal{S} \mapsto \mathbb{R}$ is the reward function, and $\rho_0:\mathcal{S}\mapsto\mathbb{R}$ is the initial state distribution.
+
+Based on the model mentioned below, we consider a standard reinforcement learning scenario: the agent interacts with the environment by sampling actions from its stochastic policy $\pi:\mathcal{S}\times\mathcal{A}\mapsto[0,1]$. At each timestep $t$, the agent receives a state $s_t$, samples an action $a_t \sim \pi(s_t | a_t)$, and receives in return a scalar reward $r_t$ and the next state $s_{t+1}$. 
+
+The problem we want to solve is an optimization problem, where the goal is to maximize the objective function 
+
+\[
+\eta = \mathbb{E}
+\left[ \sum_{t=0}^{\infty}r(s_t, a_t, s_{t+1})\right]
+\] 
+% In the case of a continuous action space, $\pi$ is a gaussian distribution. <- add this to experiments
+
+%It is common practice to estimate the transition probability and the reward function based on observed samples and plug-in an empirical model instead of the true function.
+
+
+For a policy $\pi$ with parameters $\theta$ we consider the following policy gradient 
+formula below:
 %\[
 %g = \mathbb{E}[\sum_{t=0}{\infty} \Psi \nabla_{\theta}\log\pi_{\theta}(a_t|s_t)]
 %\]
 
-The weight $\Psi$ has a number of different possible values, like the total reward, the TD residual, the state-value function or the advantage function. The advantage function $A^\pi(s_t, a_t)$ is the most optimal choice for lowering variance. We estimate this function by a neural network called the Critic network.
+The weight $\Psi$ has a number of different possible values, like the total reward, the TD residual, the state-value function or the advantage function. In most cases, the advantage function $A^\pi(s_t, a_t)$ is the optimal choice for lowering variance. 
+In practice however, the advantage function $A^\pi$ is not known and must be estimated. This will intrinsically introduce bias to the policy gradient estimate. The goal is to find a good balance by reducing variance while adding as little bias as possible. It is necessary to highlight the importance of these considerations; while a high variance estimator can eventually converge given the right amount of learning samples, there is no way to guarantee good performance from a biased estimate of the policy gradient. 
+A more in-depth analysis of the different ways the accuracy of the advantage estimate can be affected is provided by \cite{schulman2015highdimensional}. 
+
+\subsection{General Advantage Estimation}
+
+The bias introduced by lower values of $\lambda$ is directly related to the accuracy of $\hat{V}^\pi$, the estimate of the $V^\pi$ function. Lower values of $\gamma$ on the other hand add bias regardless of the quality of the estimate $\hat{V}^\pi$.
+
+% Speak about function F(A1, A2, ...) 
+%
+
 
