@@ -1,0 +1,10 @@
+\section{Preliminaries}
+\label{sec:preliminaries}
+
+For a policy $\pi$ with parameters $\theta$ we give the following policy gradient formula below:
+%\[
+%g = \mathbb{E}[\sum_{t=0}{\infty} \Psi \nabla_{\theta}\log\pi_{\theta}(a_t|s_t)]
+%\]
+
+The weight $\Psi$ has a number of different possible values, like the total reward, the TD residual, the state-value function or the advantage function. The advantage function $A^\pi(s_t, a_t)$ is the most optimal choice for lowering variance. We estimate this function by a neural network called the Critic network.
+

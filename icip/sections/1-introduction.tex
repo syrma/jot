@@ -1,0 +1,32 @@
+\section{Introduction}
+\label{sec:intro}
+
+Despite its apparent success in a variety of tasks from robotics to game playing, Deep Reinforcement Learning raises a number of issues on the matter of generalization. The attractiveness of this paradigm is owed in no small part to its general aspect; ideally, the same model would be able to learn any task as long as the environment it is put in is correctly and optimally designed. Consequently, Deep Reinforcement Learning techniques attract interest for their great potential for transfer across applications with little to no adjustments. Efforts towards reaching this goal are however impeded in a number of ways. 
+Deep reinforcement learning models often suffer of high sample complexity. Policy gradients estimates have high variance and have shown  to be extremely sensitive to hyperparameter choices, network architecture, environment-specific variables, as well as random seeds. [cite: drl that matters?] %They also have a tendency to overfit to their training environment.
+ This not only makes reproducing the reported results of a given technique a hard and unpredictable task, it also seemingly cancels the advantage of having a general paradigm for transfer across applications as it creates a need for fine-tuning the model for any given non-trivial task.
+
+Policy Gradient methods are particularly attractive because they are straightforward to combine with nonlinear approximators such as neural networks. Those estimators however suffer from extremely high variance, and necessitate a very large number of samples. Actor critic method try to solve this by introducing value functions, which sensibly reduces variance and the size of needed samples, at the cost of creating bias. There are several kinds of value functions and different methods to estimate them, and the aim is to find an estimator that reduces optimally the variance without creating a poor solution from too much bias.
+
+Motivation for our method:
+- facilitate finding the balance/an optimal estimate in terms of variance and bias --> reduce the need to fine-tune the model and generalize better.
+
+(Research about: the relationship between Ensemble Learning, Advantage Estimation, and the variance and bias trade-off)
+
+(Also: Ensemble Learning and the different advantage estimation techniques)
+
+In this paper, we investigate the effects of using network ensemble for advantage estimation. The goal of this experiment is to see how this method affects the performance of advantage-based actor-critic methods. The intuition behind this method is that it could help training multiple advantage estimation methods with different hyperparameters would require less fine-tuning to specific environments and algorithms, leading to better generalization. 
+
+
+The experiment plan includes:  
+- training multiple estimation methods with different hyperparameters.
+- testing different rules for combining the estimates obtained from each network.
+- testing different advantage-based actor-critic algorithms and noting the impact on their performance. 
+
+- to find an estimation that introduces minimal bias while reducing the variance, and 
+
+- Ensemble network
+- Advantage based actor critic method
+- critic = advantage estimation. Trained with supervised learning? mean squared error
+- advantage estimation by multiple neural networks
+- network ensemble 
+

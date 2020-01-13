@@ -1,0 +1,53 @@
+\section{ILLUSTRATIONS, GRAPHS, AND PHOTOGRAPHS}
+\label{sec:illust}
+
+Illustrations must appear within the designated margins.  They may span the two
+columns.  If possible, position illustrations at the top of columns, rather
+than in the middle or at the bottom.  Caption and number every illustration.
+All halftone illustrations must be clear black and white prints.  Colors may be
+used, but they should be selected so as to be readable when printed on a
+black-only printer.
+
+Since there are many ways, often incompatible, of including images (e.g., with
+experimental results) in a LaTeX document, below is an example of how to do
+this \cite{Lamp86}.
+
+% Below is an example of how to insert images. Delete the ``\vspace'' line,
+% uncomment the preceding line ``\centerline...'' and replace ``imageX.ps''
+% with a suitable PostScript file name.
+% -------------------------------------------------------------------------
+\begin{figure}[htb]
+
+\begin{minipage}[b]{1.0\linewidth}
+  \centering
+  \centerline{\includegraphics[width=8.5cm]{images/image1}}
+%  \vspace{2.0cm}
+  \centerline{(a) Result 1}\medskip
+\end{minipage}
+%
+\begin{minipage}[b]{.48\linewidth}
+  \centering
+  \centerline{\includegraphics[width=4.0cm]{images/image3}}
+%  \vspace{1.5cm}
+  \centerline{(b) Results 3}\medskip
+\end{minipage}
+\hfill
+\begin{minipage}[b]{0.48\linewidth}
+  \centering
+  \centerline{\includegraphics[width=4.0cm]{images/image4}}
+%  \vspace{1.5cm}
+  \centerline{(c) Result 4}\medskip
+\end{minipage}
+%
+\caption{Example of placing a figure with experimental results.}
+\label{fig:res}
+%
+\end{figure}
+
+
+% To start a new column (but not a new page) and help balance the last-page
+% column length use \vfill\pagebreak.
+% -------------------------------------------------------------------------
+%\vfill
+%\pagebreak
+
