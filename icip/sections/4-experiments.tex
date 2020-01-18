@@ -1,20 +1,38 @@
 \section{ILLUSTRATIONS, GRAPHS, AND PHOTOGRAPHS}
 \label{sec:illust}
 
+The purpose of this experiment is to implement our generalized critic instead of a regular critic on top of previously known state-of-the-art algorithms and check empirically the effect this has on their performance while paying particular attention to :
+\begin{enumerate}
+\item the tasks, and whether different environments react differently to this change in implementation;
+\item the 
+\end{enumerate}
 
+We will then provide an interpretation of the results and try to explain 
+
+\subsection{Experiment Setting}
 % In the case of a continuous action space, $\pi$ is a gaussian distribution. <- add this to experiments
+For the sake of this experiment, we consider four continuous control tasks of the OpenAI Gym toolkit collection: 2D Walker, Inverted Pendulum, Ant and Half Cheetah. 
+We implement our Generalized Critic on top of a PPO-Clip Actor \cite{ppo}.
+\begin{itemize}
+\item performance (average return) of base algorithms in every task,
+\item performance with four versions of Generalized Critic: two different values of lambda and gamma and the possible combinations with two values of the weights of the linear combination.
+\end{itemize}
 
-Illustrations must appear within the designated margins.  They may span the two
-columns.  If possible, position illustrations at the top of columns, rather
-than in the middle or at the bottom.  Caption and number every illustration.
-All halftone illustrations must be clear black and white prints.  Colors may be
-used, but they should be selected so as to be readable when printed on a
-black-only printer.
+\subsection{Policy Optimization}
 
-Since there are many ways, often incompatible, of including images (e.g., with
-experimental results) in a LaTeX document, below is an example of how to do
-this \cite{Lamp86}.
+The policy optimization method that we use for this experiment is a Proximal Policy Optimization with the Clip variant. 
 
+%present ppo
+
+\subsection{Trained Tasks}
+
+
+
+\subsection{Experiment Results}
+
+\begin{tabular}{c}
+
+\end{tabular}
 % Below is an example of how to insert images. Delete the ``\vspace'' line,
 % uncomment the preceding line ``\centerline...'' and replace ``imageX.ps''
 % with a suitable PostScript file name.

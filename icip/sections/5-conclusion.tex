@@ -1,25 +1,19 @@
-\section{COPYRIGHT FORMS}
-\label{sec:copyright}
+\section{Conclusion}
+\label{sec:conc}
+In the present work, we have presented a general model for critics in Actor-Critic methods. We believe that this representation can become a basis to simplify the design of complex deep reinforcement learning agents.
 
-You must include your fully completed, signed IEEE copyright release form when
-form when you submit your paper. We {\bf must} have this form before your paper
-can be published in the proceedings.
+We have provided a basic, practical example of exploiting the model to design a practical method and test it against currently challenging state-of-the-art control tasks.
 
-\section{REFERENCES}
-\label{sec:ref}
+Below are some perspectives for future work:
 
-List and number all bibliographical references at the end of the
-paper. The references can be numbered in alphabetic order or in
-order of appearance in the document. When referring to them in
-the text, type the corresponding reference number in square
-brackets as shown at the end of this sentence \cite{C2}. An
-additional final page (the fifth page, in most cases) is
-allowed, but must contain only references to the prior
-literature.
+Provide a more complete set of experiments, in particular: 
+\begin{itemize}
+\item thoroughly investigate the range of possible hyperparameters and deduce a more general use case;
+\item represent the aggregation function with different models, including trained nonlinear approximators;
+\item encompass more known policy optimization methods and algorithms, and adapt our method accordingly.
+\end{itemize}
 
-% References should be produced using the bibtex program from suitable
-% BiBTeX files (here: strings, refs, manuals). The IEEEbib.bst bibliography
-% style file from IEEE produces unsorted bibliography list.
+In addition to these pratical considerations, we intend to study the Generalized Critic model's shortcomings and provide more formal representations.
 % -------------------------------------------------------------------------
 \bibliographystyle{IEEEbib}
 \bibliography{strings,refs}
