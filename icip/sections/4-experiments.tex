@@ -1,30 +1,44 @@
-\section{ILLUSTRATIONS, GRAPHS, AND PHOTOGRAPHS}
-\label{sec:illust}
+\section{Experiments}
+\label{sec:exp}
 
-The purpose of this experiment is to implement our generalized critic instead of a regular critic on top of previously known state-of-the-art algorithms and check empirically the effect this has on their performance while paying particular attention to :
+The purpose of this experiment is to check how our generalized critic performs by comparison to a regular critic on top of a common actor, while paying a particular attention to the following factors:
 \begin{enumerate}
 \item the tasks, and whether different environments react differently to this change in implementation;
-\item the 
+\item the hyperparameters of the advantage
+\item the aggregation function, and how its parameters affect the average return.
 \end{enumerate}
 
-We will then provide an interpretation of the results and try to explain 
+We will then provide the average total reward for each set of experiments and an interpretation of the results.
 
 \subsection{Experiment Setting}
 % In the case of a continuous action space, $\pi$ is a gaussian distribution. <- add this to experiments
 For the sake of this experiment, we consider four continuous control tasks of the OpenAI Gym toolkit collection: 2D Walker, Inverted Pendulum, Ant and Half Cheetah. 
-We implement our Generalized Critic on top of a PPO-Clip Actor \cite{ppo}.
+
+We implement our Generalized Critic on top of a Proximal Policy Optimization actor \cite{schulman2017proximal} of the clip variant, as given in \ref{subsec:po}.
+
+The conducted experiments are as follows:
 \begin{itemize}
-\item performance (average return) of base algorithms in every task,
-\item performance with four versions of Generalized Critic: two different values of lambda and gamma and the possible combinations with two values of the weights of the linear combination.
+\item A basic PPO with a regular critic will serve as a benchmark.
+\item $\mathcal{F}_{phi_1}$ with two sets of generalized critic, each consisting in two advantage estimates.
+\item $\mathcal{F}_{phi_2}$ with the same generalized critics.
 \end{itemize}
 
-\subsection{Policy Optimization}
+For the sake of this experiment, $\phi_1$ and $\phi_2$ are both linear parameters such that $\mathcal{F}$ is a convex combination.
 
-The policy optimization method that we use for this experiment is a Proximal Policy Optimization with the Clip variant. 
+The two critics wil be characterized by the following hyperparameters:
+\begin{description}
+\item[$GC_1$] two advantage estimates with \lambda_1 = 0.98, \lambda_2 = 0.99, \gamma_1 = 0.99, \gamma_2 = 0.97
+\item[$GC_2$] \lambda_1 = 0.98, \lambda_2 = 0.99, \gamma_1 = 0.99, \gamma_2 = 0.97
+\end{description}
+
+\subsection{Trained Tasks}
+
+\subsection{Policy Optimization}
+\label{subsec:po}
+The policy optimization method that we use for this experiment is a Proximal Policy Optimization with the Clip variant.
 
 %present ppo
 
-\subsection{Trained Tasks}
 
 
 
