@@ -3,9 +3,9 @@
 
 
 \subsection{Markov Decision Process}
-The Markov Decision Process (MDP) is a mathematical model widely used to formulate reinforcement learning problems. Let us consider an infinite-horizon, undiscounted MDP defined by the tuple ($\mathcal{S}, \mathcal{A}, \mathcal{P}, r, \rho_0$) where $\mathcal{S}$ is the set of states, $\mathcal{A}$ is the set of actions, $\mathcal{P}: \mathcal{S}\times\mathcal{A}\times\mathcal{S}\mapsto \mathbb{R}$ , $r: \mathcal{S}\times\mathcal{A}\times\mathcal{S} \mapsto \mathbb{R}$ is the reward function, and $\rho_0:\mathcal{S}\mapsto\mathbb{R}$ is the initial state distribution.
+The Markov Decision Process (MDP) is a mathematical model widely used to formulate reinforcement learning problems. Let us consider an infinite-horizon, undiscounted MDP defined by the tuple ($\mathcal{S}, \mathcal{A}, \mathcal{P}, r, \rho_0$) where $\mathcal{S}$ is the set of states, $\mathcal{A}$ is the set of actions, $\mathcal{P}: \mathcal{S}\times\mathcal{A}\times\mathcal{S}\mapsto \mathbb{R}$ is the transition probability distribution, $r: \mathcal{S}\times\mathcal{A}\times\mathcal{S} \mapsto \mathbb{R}$ is the reward function, and $\rho_0:\mathcal{S}\mapsto\mathbb{R}$ is the initial state distribution.
 
-Based on the model mentioned above, we consider a standard reinforcement learning scenario: the agent interacts with the environment by sampling actions from its stochastic policy $\pi:\mathcal{S}\times\mathcal{A}\mapsto[0,1]$. At each timestep $t$, the agent receives a state $s_t$, samples an action $a_t \sim \pi(s_t | a_t)$, and receives in return a scalar reward $r_t$ and the next state $s_{t+1}$ following the . 
+Based on the model mentioned above, we consider a standard reinforcement learning scenario: the agent interacts with the environment by sampling actions from its stochastic policy $\pi:\mathcal{S}\times\mathcal{A}\mapsto[0,1]$. At each timestep $t$, the agent receives a state $s_t$, samples an action $a_t \sim \pi(s_t | a_t)$, and receives in return a scalar reward $r_t$ and the next state $s_{t+1}$. 
 
 The problem we want to solve is an optimization problem, where the goal is to maximize the objective function 
 
@@ -19,19 +19,38 @@ The observed trajectories of form $\tau = \{s_0, a_0, r_0, s_1, ... \}$ of a num
 %It is common practice to estimate the transition probability and the reward function based on observed samples and plug-in an empirical model instead of the true function.
 
 \subsection{Policy Gradient}
-For a policy $\pi$ with parameters $\theta$ we consider the following policy gradient 
-formula below:
-%\[
-%g = \mathbb{E}[\sum_{t=0}{\infty} \Psi \nabla_{\theta}\log\pi_{\theta}(a_t|s_t)]
-%\]
+For a policy $\pi$ with parameters $\theta$ we consider the policy gradient formula below:
 
-The weight $\Psi$ has a number of different possible values, like the total reward, the TD residual, the state-value function or the advantage function. In most cases, the advantage function $A^\pi(s_t, a_t)$ is the optimal choice for lowering variance. 
-In practice however, the advantage function $A^\pi$ is not known and must be estimated. This will intrinsically introduce bias to the policy gradient estimate. The goal is to find a go	od balance by reducing variance while adding as little bias as possible. It is necessary to highlight the importance of these considerations; while a high variance estimator can eventually converge given the right amount of learning samples, there is no way to guarantee good performance from a biased estimate of the policy gradient. 
-A more in-depth analysis of the different ways the accuracy of the advantage estimate can be affected is provided by \cite{schulman2015highdimensional}. 
+\[
+g = \mathbb{E}\left[\sum_{t=0}^{\infty} \Psi \nabla_{\theta}\log\pi_{\theta}(a_t|s_t)\right]
+\]
+
+The weight $\Psi$ has a number of different possible values \cite{schulman2015highdimensional}. We consider mainly the the advantage function $A^\pi(s_t, a_t)$, as it tends to be the optimal choice for lowering variance. The advantage function is defined as follows:
+\begin{equation}
+A^\pi(s_t,a_t) = Q^\pi(s_t, a_t) - V^\pi(s_t)
+\end{equation}
+for 
+\begin{align*}
+&V(s_t) = \mathbb{E}\left[\sum_{l=0}^{\infty} r_l | s_0 = s_t \right],\\
+&Q(s_t, a_t) = \mathbb{E}\left[\sum_{l=0}^{\infty} r_l | s_0 = s_t, a_0 = a_t \right]
+\end{align*}
+
+
+In practice however, the advantage function $A^\pi$ is not known and must be estimated. This will intrinsically introduce bias to the policy gradient estimate. The goal is to find a good balance by reducing variance while adding as little bias as possible. It is necessary to highlight the importance of these considerations; while a high variance estimator can eventually converge given the right amount of learning samples, there is no way to guarantee good performance from a biased estimate of the policy gradient. 
+%A more in-depth analysis of the different ways the accuracy of the advantage estimate can be affected is provided by \cite{schulman2015highdimensional}. 
 
 \subsection{General Advantage Estimation}
 
+The General Advantage Estimation\cite{schulman2015highdimensional} function is given by the following equation:
 
+\begin{equation}
+\hat{A}_t^{GAE(\gamma, \lambda)} = \sum_{l=0}^{\infty}(\gamma \lambda)^l \delta^V_{t+l}
+\end{equation}
 
-The bias introduced by lower values of $\lambda$ is directly related to the accuracy of $\hat{V}^\pi$, the estimate of the $V^\pi$ function. Lower values of $\gamma$ on the other hand add bias regardless of the quality of the estimate $\hat{V}^\pi$.
+where $\gamma \in [0,1]$ is the discount factor, $\lambda \in [0,1]$ an additional parameter for the advantage estimation function, and $\delta^V_t = -V(s_t) + r_t + \gamma V(s_{t+1})$ is the TD residual of the value function $V(s_t)$ discounted by $\gamma$ \cite{sutton1998introduction}.
 
+Choosing the values for both $\gamma$ and $\lambda$ is subject to fine-tuning. Bias introduced by lower values of $\lambda$ is directly related to the accuracy of $\hat{V}^\pi$, the estimate of the $V^\pi$ function. Lower values of $\gamma$ on the other hand add bias regardless of the quality of the estimate $\hat{V}^\pi$.
+
+There are straightforward ways of estimating the policy gradient and the value function with nonlinear approximators. The most common practice is for the estimator to be a neural network, especially in cases where the set of states $\mathcal{S}$ is extremely big, which is the case for most of the real-world practical applications of artificial intelligence. The implementation of neural network estimators within reinforcement learning methods is commonly referred to in literature as deep reinforcement learning. The policy gradient approximator is often called the policy network, or the actor network; the value function approximator is mentioned as the value network, or the critic network.
+
+In this paper, we consider actor-critic methods to refer to any method in reinforcement learning that estimates the policy function concurrently with a value function, which includes each of the state value function $V(s)$, the state-action value function $Q(s,a)$, and the action advantage function $A(s,a)$.
