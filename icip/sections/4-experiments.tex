@@ -39,20 +39,18 @@ Table \ref{tab:reslam} shows the average returns over 5 random seeds for each ge
 
 \begin{table}[!htb]
 \begin{tabular}{p{22mm}p{14mm}p{15mm}p{11mm}}
-Algorithm & Walker2D & Humanoid & Ant\\
-PPO ($\lambda$ = 0.97) & - & - & - \\
+Algorithm & Walker2D & Ant & Humanoid \\
+PPO ($\lambda$ = 0.97) & 690.47 & 1107.71 & \textbf{110.85} \\
 \hline
-$\lambda$ = (0.97, 0.93) & 718,80 & 1535,21 & 108,23  \\ 
+$\lambda$ = (0.97, 0.93) & 718.80 & \textbf{1535.21} & 108.23  \\ 
 \hline
-$\lambda$ = (0.97, 0.99)& 688,64 & 1218,36 & 105,31  \\ 
+$\lambda$ = (0.97, 0.99)& 688.64 & 1218.36 & 105.31  \\ 
 \hline
-$\lambda$ = (0.99, 0.97)& 752 & 1080,83 & 106,99 \\ 
+$\lambda$ = (0.99, 0.97)& \textbf{752} & 1080.83 & 106.99 \\ 
 \end{tabular}
 \caption{Performance for three generalized critics across environments}
 \label{tab:reslam}
 \end{table}
-
-
 
 % Below is an example of how to insert images. Delete the ``\vspace'' line,
 % uncomment the preceding line ``\centerline...'' and replace ``imageX.ps''
