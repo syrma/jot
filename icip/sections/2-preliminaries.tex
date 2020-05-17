@@ -5,7 +5,7 @@
 \subsection{Markov Decision Process}
 The Markov Decision Process (MDP) is a mathematical model widely used to formulate reinforcement learning problems. Let us consider an infinite-horizon, undiscounted MDP defined by the tuple ($\mathcal{S}, \mathcal{A}, \mathcal{P}, r, \rho_0$) where $\mathcal{S}$ is the set of states, $\mathcal{A}$ is the set of actions, $\mathcal{P}: \mathcal{S}\times\mathcal{A}\times\mathcal{S}\mapsto \mathbb{R}$ is the transition probability distribution, $r: \mathcal{S}\times\mathcal{A}\times\mathcal{S} \mapsto \mathbb{R}$ is the reward function, and $\rho_0:\mathcal{S}\mapsto\mathbb{R}$ is the initial state distribution.
 
-Based on the model mentioned above, we consider a standard reinforcement learning scenario: the agent interacts with the environment by sampling actions from its stochastic policy $\pi:\mathcal{S}\times\mathcal{A}\mapsto[0,1]$. At each timestep $t$, the agent receives a state $s_t$, samples an action $a_t \sim \pi(s_t | \cdot)$, and receives in return a scalar reward $r_t$ and the next state $s_{t+1}$. 
+Based on the model mentioned above, we consider a standard reinforcement learning scenario: the agent interacts with the environment by sampling actions from its stochastic policy $\pi:\mathcal{S}\times\mathcal{A}\mapsto[0,1]$. At each timestep $t$, the agent receives a state $s_t$, samples an action $a_t \sim \pi(\cdot | s_t)$, and receives in return a scalar reward $r_t$ and the next state $s_{t+1}$.
 
 The problem we want to solve is an optimization problem, where the goal is to maximize the expected total reward
 
@@ -25,11 +25,11 @@ For a policy $\pi$ with parameters $\theta$ we consider the policy gradient form
 g = \mathbb{E}\left[\sum_{t=0}^{\infty} \Psi \nabla_{\theta}\log\pi_{\theta}(a_t|s_t)\right]
 \]
 
-The weight $\Psi$ has a number of different possible values \cite{schulman2015highdimensional}. We consider mainly the the advantage function $A^\pi(s_t, a_t)$, as it tends to be the optimal choice for lowering variance. The advantage function is defined as follows:
+The weight $\Psi$ has a number of different possible values \cite{schulman2015highdimensional}. We consider mainly the advantage function $A^\pi(s_t, a_t)$, as it tends to be the optimal choice for lowering variance. The advantage function is defined as follows:
 \begin{equation}
 A^\pi(s_t,a_t) = Q^\pi(s_t, a_t) - V^\pi(s_t)
 \end{equation}
-for 
+for
 \begin{align*}
 &V(s_t) = \mathbb{E}\left[\sum_{l=0}^{\infty} r_l | s_0 = s_t \right],\\
 &Q(s_t, a_t) = \mathbb{E}\left[\sum_{l=0}^{\infty} r_l | s_0 = s_t, a_0 = a_t \right]
